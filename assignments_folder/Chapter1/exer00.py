@@ -9,7 +9,6 @@ str1 = "stressed"
 str_reversed = str[::-1]
 print(str_reversed)
 
-
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.171～p.173の「短いコードを書くこと」で，
