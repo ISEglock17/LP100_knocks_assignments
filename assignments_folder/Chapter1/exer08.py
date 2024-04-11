@@ -5,20 +5,23 @@
 与えられた文字列の各文字を，以下の仕様で変換する関数cipherを実装せよ
 
 """
+import re
+
 # 関数定義
-def template(x: str, y: str, z: str) -> str:
-    """引数x, y, zを受け取り「x時のyはz」という文字列を返す関数"""
-    return str(x) + "時の" + str(y) + "は" + str(z)
+def cipher(str1: str) -> str:
+    """
+        暗号化・複合化を行う関数
+    """
+    return "".join([chr(219 - ord(s)) if s.islower() else s for s in str1])
 
-# 初期化
-x, y, z = 12, "気温", 22.4
-
-# 出力
-print(template(x, y, z))
-
+# テスト
+print("\"heL値lo11sy1\"を暗号化します。")
+print(cipher("heL値lo11sy1"))
+print("これを複合化します。")
+print(cipher(cipher("heL値lo11sy1")))
 
 """
 ―リーダブルコードの内容で実践したこと―
-・p.171～p.173の「短いコードを書くこと」で，x, y, z = 値の形式にてコンパクトにまとめた。
+
 
 """
