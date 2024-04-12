@@ -9,13 +9,11 @@
 str1 = "パトカー"
 str2 = "タクシー"
 str_combined_alternately = ""   #交互に結合された文字列
-flag = True
 
 #文字列操作: 交互に結合
 for si in range(len(str1)):
-    for j in range(2):
+    for flag in [True, False]:
         str_combined_alternately += str1[si] if flag else str2[si]
-        flag = not flag
 
 #出力
 print(str_combined_alternately)
