@@ -17,6 +17,8 @@ for i in index2extract:
 #出力
 print(str_extracted)
 
+# ＊出力結果＊
+# パトカー
 
 """
 ―リーダブルコードの内容で実践したこと―
