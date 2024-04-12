@@ -12,7 +12,7 @@ index2extract = [0,2,4,6]   #抽出する文字のindex
 
 #抽出，結合工程
 for i in index2extract:
-    str_extracted += str[i]
+    str_extracted += str1[i]
     
 #出力
 print(str_extracted)
