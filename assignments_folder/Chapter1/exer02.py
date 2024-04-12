@@ -18,6 +18,8 @@ for si in range(len(str1)):
 #出力
 print(str_combined_alternately)
 
+# ＊出力結果＊
+# パタトクカシーー
 
 """
 ―リーダブルコードの内容で実践したこと―
