@@ -16,7 +16,7 @@ def n_gram(str1: str, split_num: int, flag: bool = False) -> list:
     n_gram_list = []
     
     if type(str1) is str:
-        splited_word_list = str1.split()    #単語に分割
+        splited_word_list = str1.split()    # 単語に分割
         
         if flag is True:
             splited_word_list = ''.join(splited_word_list)
@@ -53,6 +53,10 @@ print("’se’というbi-gramがYに", end="")
 print("含まれる" if "se" in Y else "含まれない")
 """
 ―リーダブルコードの内容で実践したこと―
-
+・p.10の「2.1 明確な単語を選ぶ」で，
+splited_word_listと分割した単語リストであることを示した。
+split_numで分割数が引数であることを明確化した。
+p.4「1.3 小さなことは絶対にいいこと?」に従い，
+あえてn-gram生成を内包表記しなかった。
 
 """

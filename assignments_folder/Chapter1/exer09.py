@@ -18,7 +18,7 @@ def word_magic(str1: str) -> str:
     message = ""
        
     if type(str1) is str:
-        splited_word_list = str1.split()    #単語に分割
+        splited_word_list = str1.split()    # 単語に分割
     
     for word in splited_word_list:
         if len(word) > 4:
@@ -33,6 +33,7 @@ def word_magic(str1: str) -> str:
 print(word_magic("I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind ."))
 """
 ―リーダブルコードの内容で実践したこと―
-
+・p.10の「2.1 明確な単語を選ぶ」で，
+splited_word_listと分割した単語リストであることを示した。
 
 """

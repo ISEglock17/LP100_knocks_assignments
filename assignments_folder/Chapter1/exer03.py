@@ -21,6 +21,6 @@ print(character_count_list)
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.10の「2.1 明確な単語を選ぶ」で，
-list_character_countと文字数のリストであることを示した。
+character_count_listと文字数のリストであることを示した。
 
 """

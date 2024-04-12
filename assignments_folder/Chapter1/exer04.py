@@ -13,10 +13,10 @@ index2extract = [i - 1 for i in [1, 5, 6, 7, 8, 9, 15, 16, 19]]
 
 #文字列操作: 単語に分解，
 splited_word_list = str1[0:-1].split()
-extracted_word_list = [word[0] if i in index2extract else word[0:2] for i, word in enumerate(splited_word_list)]
+extracted_word_list = [word[0] if index in index2extract else word[0:2] for index, word in enumerate(splited_word_list)]
 
 #辞書型の生成
-dict = dict(zip(extracted_word_list, [i + 1 for i in range(len(extracted_word_list))]))
+dict = dict(zip(extracted_word_list, range(1, len(extracted_word_list) + 1)))
 
 #出力
 print(dict)
@@ -26,5 +26,8 @@ print(dict)
 ・p.10の「2.1 明確な単語を選ぶ」で，
 extracted_word_listと抽出した文字列リストであることを示した。
 index2extractと抽出する文字のindexであることを示した。
+
+・p.4「1.3 小さなことは絶対にいいこと?」に従い，
+辞書型の生成はまとめて内包表記などで1行に収めることもできるが，今後の発展性も考えて，2つのリストを結合する分かりやすい方法を取ることにした。
 
 """
