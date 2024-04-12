@@ -11,11 +11,11 @@ import re
 # 初期化
 str1 = "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
 
-#文字列操作: 単語に分解，文字数カウント
+# 文字列操作: 単語に分解，文字数カウント
 splited_word_list = str1.split()
 character_count_list = [len(re.sub(r"[^a-zA-Z]", "", s)) for s in splited_word_list]
 
-#出力
+# 出力
 print(character_count_list)
 
 # ＊出力結果＊
