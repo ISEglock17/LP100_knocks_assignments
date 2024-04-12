@@ -21,6 +21,9 @@ dict = dict(zip(extracted_word_list, range(1, len(extracted_word_list) + 1)))
 #出力
 print(dict)
 
+# 出力結果
+# {'H': 1, 'He': 2, 'Li': 3, 'Be': 4, 'B': 5, 'C': 6, 'N': 7, 'O': 8, 'F': 9, 'Ne': 10, 'Na': 11, 'Mi': 12, 'Al': 13, 'Si': 14, 'P': 15, 'S': 16, 'Cl': 17, 'Ar': 18, 'K': 19, 'Ca': 20}
+
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.10の「2.1 明確な単語を選ぶ」で，

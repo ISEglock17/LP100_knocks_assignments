@@ -51,6 +51,28 @@ print("’se’というbi-gramがXに", end="")
 print("含まれる" if "se" in X else "含まれない")
 print("’se’というbi-gramがYに", end="")
 print("含まれる" if "se" in Y else "含まれない")
+
+
+# 出力結果
+"""
+X
+{'se', 'ra', 'ad', 'is', 'ar', 'pa', 'ap', 'di'}
+Y
+{'ra', 'ag', 'ar', 'pa', 'gr', 'ph', 'ap'}
+XとYの和集合
+{'se', 'ra', 'ag', 'ad', 'is', 'ar', 'pa', 'gr', 'ph', 'ap', 'di'}
+XとYの積集合
+{'ra', 'ap', 'ar', 'pa'}
+XとYの差集合 X - Y
+{'di', 'se', 'ad', 'is'}
+XとYの差集合 Y - X
+{'gr', 'ag', 'ph'}
+’se’というbi-gramがXに含まれる
+’se’というbi-gramがYに含まれない
+"""
+
+
+
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.10の「2.1 明確な単語を選ぶ」で，

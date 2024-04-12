@@ -23,6 +23,14 @@ print(cipher("heL値lo11sy1"))
 print("これを複合化します。")
 print(cipher(cipher("heL値lo11sy1")))
 
+# 出力結果
+"""
+"heL値lo11sy1"を暗号化します。
+svL値ol11hb1
+これを複合化します。
+heL値lo11sy1
+"""
+
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.171～p.173の「短いコードを書くこと」で，

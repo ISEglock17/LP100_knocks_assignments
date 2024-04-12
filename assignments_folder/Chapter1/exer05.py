@@ -32,8 +32,13 @@ print(n_gram("I am an NLPer", 2))
 print("文字bi-gramだと")
 print(n_gram("I am an NLPer", 2, True))
         
-        
-
+# 出力結果
+"""
+単語bi-gramだと，
+[['I', 'am'], ['am', 'an'], ['an', 'NLPer']]
+文字bi-gramだと
+['Ia', 'am', 'ma', 'an', 'nN', 'NL', 'LP', 'Pe', 'er']
+"""        
     
 """
 ―リーダブルコードの内容で実践したこと―

@@ -30,7 +30,12 @@ def word_magic(str1: str) -> str:
             
     return message
 
+# 出力
 print(word_magic("I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind ."))
+
+# 出力結果
+# I clundo’t bvlieee that I cuold atcually uedstrnand what I was randeig : the pmenohenal peowr of the hamun mind .
+
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.10の「2.1 明確な単語を選ぶ」で，

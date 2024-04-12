@@ -18,6 +18,9 @@ character_count_list = [len(re.sub(r"[^a-zA-Z]", "", s)) for s in splited_word_l
 #出力
 print(character_count_list)
 
+# ＊出力結果＊
+# [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]
+
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.10の「2.1 明確な単語を選ぶ」で，
