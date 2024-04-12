@@ -7,10 +7,13 @@
 """
 # 初期化
 str1 = "stressed"
-str_reversed = str[::-1]
+str_reversed = str1[::-1]
 
-#出力
+# 出力
 print(str_reversed)
+
+# 出力結果
+# desserts
 
 """
 ―リーダブルコードの内容で実践したこと―
