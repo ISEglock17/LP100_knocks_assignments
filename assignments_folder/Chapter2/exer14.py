@@ -1,42 +1,40 @@
 """
 言語処理100本ノック 第2章課題
 
-13. col1.txtとcol2.txtをマージPermalink
-12で作ったcol1.txtとcol2.txtを結合し，元のファイルの1列目と2列目をタブ区切りで並べたテキストファイルを作成せよ．確認にはpasteコマンドを用いよ．
+14. 先頭からN行を出力Permalink
+自然数Nをコマンドライン引数などの手段で受け取り，入力のうち先頭のN行だけを表示せよ．確認にはheadコマンドを用いよ．
 
 """
 import pandas as pd
 import subprocess
+import sys
 
-# 初期化
-filepath = "./assignments_folder/Chapter2/"    # ファイルパスを指定
-df1 = pd.read_table(filepath + "col1.txt", header=None)                     # pandasにおけるDataFrame形式に変更する
-df2 = pd.read_table(filepath + "col2.txt", header=None)                     # pandasにおけるDataFrame形式に変更する
+filepath = "./assignments_folder/Chapter2/popular-names.txt"
 
-df3 = pd.concat([df1, df2], axis=1)
+if __name__ == '__main__':      # 本プログラムがインポートされた際には実行されないようにするための記述
+    args = sys.argv
+    if 2 <= len(args): 
+        with open(filepath, "r") as f:
+            data = f.readlines()
+            for i in range(int(args[1])):
+                print(data[i], end="")
+    else:
+        print('引数に自然数Nを入れてください。')  
 
-df3.to_csv('./assignments_folder/Chapter2/col1_col2_marged.txt', index=False, header=False, sep='\t')
-"""
-＊ 出力結果 ＊
-Mary	F
-Anna	F
-Emma	F
-...
-
-"""
-
-output=subprocess.check_output(["wsl", "paste", filepath + "col1.txt", filepath + "col2.txt"])
-print(output.decode('utf-8'))
+print("UNIXコマンドを実行した場合には，")
+output = subprocess.check_output(["wsl", "head","-n", str(3), filepath])
+print(output.decode('utf-8'))    
 
 """
 ＊ 出力結果 ＊
-Mary    F
-Anna    F
-Emma    F
-...
-
+Mary    F       7065    1880
+Anna    F       2604    1880
+Emma    F       2003    1880
+UNIXコマンドを実行した場合には，
+Mary    F       7065    1880
+Anna    F       2604    1880
+Emma    F       2003    1880
 """
-
 
 """
 ―リーダブルコードの内容で実践したこと―

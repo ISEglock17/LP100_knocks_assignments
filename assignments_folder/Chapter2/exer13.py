@@ -25,7 +25,7 @@ Emma	F
 
 """
 
-output=subprocess.check_output(["wsl", "paste", filepath + "col1.txt", filepath + "col2.txt"])
+output = subprocess.check_output(["wsl", "paste", filepath + "col1.txt", filepath + "col2.txt"])
 print(output.decode('utf-8'))
 
 """
