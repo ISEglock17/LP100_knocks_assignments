@@ -5,47 +5,25 @@
 1列目の文字列の種類（異なる文字列の集合）を求めよ．確認にはcut, sort, uniqコマンドを用いよ．
 
 """
-import pandas as pd
 import subprocess
-import sys
+import pandas as pd
 
-filepath = "./assignments_folder/Chapter2/"
-readfile = "popular-names.txt"
-writefile = "exer16_output/exer16_"
+# ファイルパス指定
+filepath = "./assignments_folder/Chapter2/popular-names.txt"    # ファイルパスを指定
+df = pd.read_table(filepath, header=None)                     # pandasにおけるDataFrame形式に変更する
 
-if __name__ == '__main__':      # 本プログラムがインポートされた際には実行されないようにするための記述
-    args = sys.argv
-    if 2 <= len(args):  # 引数が入力されていることを確かめる。
-        with open(filepath + readfile, "r") as f:   # 入力ファイルのデータを読み取る。
-            data = f.readlines()
-            
-        for file_num in range(int(args[1])):
-            with open(filepath + writefile + str(file_num) + ".txt", "w") as g:     # 出力ファイルを指定する。
-                for di in range(len(data) // int(args[1]) * file_num, len(data) // int(args[1]) * (file_num + 1)):   # 分割ファイルにおいて参照するindexで回す　data_indexよりdiとした。
-                    if file_num == int(args[1]) - 1 and len(data) % int(args[1]) != 0 and di == len(data) // int(args[1]) * (file_num + 1) - 1:     # 割り切れなかった分は最後の分割ファイルの末尾に追加するようにする。
-                        for i in range(len(data) % int(args[1]) + 1):          # 割り切れなかった分のindexを回す。
-                            g.write("{}".format(data[di + i]))
-                    else:
-                        g.write("{}".format(data[di]))
-    else:
-        print('引数に自然数Nを入れてください。')
+names = set(df.iloc[:, 0])
     
-    
- 
+print(names)
+
+print("UNIXコマンドを用いると，")
+output = subprocess.check_output(["wsl", "cut", "-d", "\t", "-f", "1", filepath, "|", "sort", "|", "uniq"])
+print(output.decode("utf-8"))
+
 """
 ＊ 出力結果 ＊
-7分割すると，
-- exer16_output/exer16_0.txt -
-Mary	F	7065	1880
-Anna	F	2604	1880
-Emma	F	2003	1880
-...
-
-- exer16_output/exer16_6.txt -
-...
-Lucas	M	12585	2018
-Mason	M	12435	2018
-Logan	M	12352	2018
+{'Noah', 'Bessie', 'Helen', 'Madison', 'Judith', 'Stephanie', 'Jennifer', 'Oliver', 'Ethel', 'Robert', 'Larry', 'Kathleen', 'Julie', 'Lauren', 'Jayden', 'Ronald', 'Donald', 'Ida', 'Brian', 'Crystal', 'Rebecca', 'George', 'Deborah', 'Harry', 'Debra', 'Doris', 'Laura', 'Kelly', 'Pamela', 'Mildred', 'Nicholas', 'Frances', 'Charles', 'Carolyn', 'Austin', 'Anthony', 'Jessica', 'Mason', 'Sarah', 'Mary', 'Lucas', 'Clara', 'Amelia', 'Evelyn', 'Dorothy', 'Angela', 'Heather', 'Liam', 'Logan', 'Cynthia', 'Tracy', 'William', 'Frank', 'Betty', 'Steven', 'Virginia', 'Margaret', 'Minnie', 'Lisa', 'Jacob', 'Patricia', 'Lori', 
+'Alexis', 'Alexander', 'Brandon', 'Ethan', 'Isabella', 'Elizabeth', 'Aiden', 'Benjamin', 'David', 'Bertha', 'Justin', 'Melissa', 'Richard', 'Shirley', 'Thomas', 'Brittany', 'Barbara', 'Ashley', 'Tyler', 'Tammy', 'Susan', 'Gary', 'Andrew', 'Sharon', 'Charlotte', 'Taylor', 'John', 'Linda', 'Amy', 'Sandra', 'Alice', 'Ruth', 'Mia', 'Matthew', 'Lillian', 'Ava', 'Olivia', 'Joseph', 'Michael', 'Jason', 'Karen', 'Daniel', 'Amanda', 'Donna', 'Sophia', 'Megan', 'Emma', 'Anna', 'Christopher', 'Samantha', 'James', 'Walter', 'Carol', 'Joan', 'Joshua', 'Annie', 'Henry', 'Michelle', 'Hannah', 'Scott', 'Elijah', 'Abigail', 'Nancy', 'Kimberly', 'Florence', 'Mark', 'Harper', 'Edward', 'Emily', 'Chloe', 'Rachel', 'Jeffrey', 'Nicole', 'Marie'}
 
 """
 
@@ -54,11 +32,6 @@ Logan	M	12352	2018
 ・p.171～p.173の「短いコードを書くこと」で，
 withを用いて短くした。
 
-・変数名
-data_indexより，diとすることで，forの要素を分かりやすくした。
-
-＊ 注意点 ＊
-入力データの行数2780に対して，3分割などと指定した場合には，割り切れないため，割り切れない分をどのように処理するかがポイント。
 
 UNIXコマンドでの確認方法
 wc -l assignments_folder\Chapter2\popular-names.txt
