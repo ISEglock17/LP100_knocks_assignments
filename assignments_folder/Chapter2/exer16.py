@@ -61,7 +61,4 @@ data_indexより，diとすることで，forの要素を分かりやすくし�
 ＊ 注意点 ＊
 入力データの行数2780に対して，3分割などと指定した場合には，割り切れないため，割り切れない分をどのように処理するかがポイント。
 
-UNIXコマンドでの確認方法
-wc -l assignments_folder\Chapter2\popular-names.txt
-
 """
