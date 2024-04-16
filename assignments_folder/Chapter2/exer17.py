@@ -12,13 +12,10 @@ import pandas as pd
 filepath = "./assignments_folder/Chapter2/popular-names.txt"    # ファイルパスを指定
 df = pd.read_table(filepath, header=None)                     # pandasにおけるDataFrame形式に変更する
 
-names = set(df.iloc[:, 0])
-    
-print(names)
+unique_names = set(df.iloc[:, 0])      # 1列目を抽出する
 
-print("UNIXコマンドを用いると，")
-output = subprocess.check_output(["wsl", "cut", "-d", "\t", "-f", "1", filepath, "|", "sort", "|", "uniq"])
-print(output.decode("utf-8"))
+# 出力
+print(unique_names)       
 
 """
 ＊ 出力結果 ＊
@@ -27,13 +24,21 @@ print(output.decode("utf-8"))
 
 """
 
+print("UNIXコマンドを用いると，")
+output = subprocess.check_output(["wsl", "cut", "-d", "\t", "-f", "1", filepath, "|", "sort", "|", "uniq"])
+print(output.decode("utf-8"))
+
 """
 ―リーダブルコードの内容で実践したこと―
 ・p.171～p.173の「短いコードを書くこと」で，
 withを用いて短くした。
 
+適切なコメントの使用(p.76 6.6コードの意図を書く): 
+コメントがコードの理解を助けるために使われています。例えば、どの部分が1列目の文字列を抽出しているのかを説明するコメントがあります。
 
-UNIXコマンドでの確認方法
-wc -l assignments_folder\Chapter2\popular-names.txt
+変数名の意味の明確化(p.10 2.1 明確な単語を選ぶ): 
+unique_names という変数名は、その内容を理解しやすくしています。1列目の文字列の異なる値を示すことが期待されるため、unique_names という名前は適切です。
+
+
 
 """

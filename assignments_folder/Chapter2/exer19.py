@@ -51,9 +51,4 @@ pandasの機能を使ってデータの読み込みや操作を行い，コー�
 コメントの利用(p.76 6.6コードの意図を書く):
 コードの意図や処理内容を説明するコメントをつけた。
 
-
-
-UNIXコマンドでの確認方法
-wc -l assignments_folder\Chapter2\popular-names.txt
-
 """
