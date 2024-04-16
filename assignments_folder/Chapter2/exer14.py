@@ -41,7 +41,5 @@ Emma    F       2003    1880
 ・p.171～p.173の「短いコードを書くこと」で，
 withを用いて短くした。
 
-UNIXコマンドでの確認方法
-wc -l assignments_folder\Chapter2\popular-names.txt
 
 """
