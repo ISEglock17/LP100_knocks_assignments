@@ -29,6 +29,16 @@ output = subprocess.check_output(["wsl", "cut", "-d", "\t", "-f", "1", filepath,
 print(output.decode("utf-8"))
 
 """
+＊ 出力結果 ＊
+Abigail
+Aiden
+Alexander
+Alexis
+...
+
+"""
+
+"""
 ―リーダブルコードの内容で実践したこと―
 ・p.171～p.173の「短いコードを書くこと」で，
 withを用いて短くした。
