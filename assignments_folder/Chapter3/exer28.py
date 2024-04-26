@@ -38,6 +38,7 @@ info_dic2 = {key: re.sub(pattern , "", value) for key, value in info_dic.items()
 
 # 内部リンクマークアップの削除 
 # リンクの記法 https://www.mediawiki.org/wiki/Help:What_links_here/ja    
+# リンクの記法 https://www.mediawiki.org/wiki/Help:Links/ja#:~:text=%E5%90%8C%E4%B8%80%E3%82%A6%E3%82%A3%E3%82%AD%E4%B8%8A%E3%81%AE%E3%83%9A%E3%83%BC%E3%82%B8,%E3%83%AA%E3%83%B3%E3%82%AF%E3%81%8C%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%E3%80%82
 
 pattarn_list = []
 pattarn_list.append("(?<=\}\}\<br \/\>（)\[{2}")
