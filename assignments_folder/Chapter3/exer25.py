@@ -21,11 +21,11 @@ with open(folderpath + filename, "r", encoding="utf-8") as f:
 
 # 課題25
 import re
-pattern = '基礎情報(.*?\<references/\>\\\\n)'    # イギリスの記事を見ると，referencesのところが最後となっているため，そこまでを抜き出す
+pattern = "基礎情報(.*?\<references/\>\\\\n)"    # イギリスの記事を見ると，referencesのところが最後となっているため，そこまでを抜き出す
 basic_information = re.findall(pattern, UK_article)[0]
 # print(basic_information) #デバッグ用出力
 
-pattern = '(?<=\\\\n\|)(.*?) *= *(.*?)(?=\\\\n)'    # 後読みと先読みを活用して前後が\n| \nで囲まれていることを条件とし，'='の前後のテキストを抽出する
+pattern = "(?<=\\\\n\|)(.*?) *= *(.*?)(?=\\\\n)"    # 後読みと先読みを活用して前後が\n| \nで囲まれていることを条件とし，"="の前後のテキストを抽出する
 basic_information_set = re.findall(pattern, basic_information)
 # print(basic_information_set) # デバッグ用出力
 
