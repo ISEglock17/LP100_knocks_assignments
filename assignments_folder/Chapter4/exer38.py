@@ -43,7 +43,7 @@ print(count_list)
 
 # 課題38
 fig, axis = plt.subplots()
-axis.hist(count_list, bins=100)
+axis.hist(count_list, range(100))
 plt.xlabel("出現頻度")
 plt.ylabel("種類数")
 plt.show()
