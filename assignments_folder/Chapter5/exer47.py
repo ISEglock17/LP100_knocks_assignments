@@ -77,36 +77,58 @@ with open("./assignments_folder/Chapter5/ai.ja.txt.parsed", encoding="utf-8") as
             chunks = []
             dst = None
             chunk_id = 0
-
+            
+            
+# result47.txt ファイルを書き込みモードで開きます。エンコーディングはUTF-8です。
 with open("./assignments_folder/Chapter5/result47.txt", "w", encoding="utf-8") as f:
+    # 各文についてループします。
     for sentence in sentences:
+        # 文節ごとにループします。
         for chunk in sentence.chunks:
+            # 文節内の形態素ごとにループします。
             for morph in chunk.morphs:
+                # 品詞が動詞である場合のみ処理を行います。
                 if morph.pos == "動詞": 
+                    # 文節の係り元のインデックスごとにループします。
                     for src in chunk.srcs:
-                        predicates = []
-                        if (len(sentence.chunks[src].morphs) == 2 and sentence.chunks[src].morphs[0].pos1 == "サ変接続" and sentence.chunks[src].morphs[1].surface == "を"):
+                        # サ変接続の名詞+をを持つ文節の場合のみ処理を行います。
+                        if (len(sentence.chunks[src].morphs) == 2 and 
+                            sentence.chunks[src].morphs[0].pos1 == "サ変接続" and 
+                            sentence.chunks[src].morphs[1].surface == "を"):
+                            
+                            # 述語を構築します。
                             predicates = "".join([
                                 sentence.chunks[src].morphs[0].surface, 
                                 sentence.chunks[src].morphs[1].surface, 
                                 morph.base
                             ])
                             
+                            # 助詞と項を格納するリストを初期化します。
                             particles = []
                             items = []
+                            
+                            # 文節の係り元のインデックスごとにループします。
                             for src2 in chunk.srcs:
+                                # 助詞を抽出し、リストに追加します。
                                 particles += [morph.surface for morph in sentence.chunks[src2].morphs if morph.pos == "助詞"]
+                                
+                                # 記号を除いた形態素の表層形を連結し、項を取得します。
                                 item = "".join([morph.surface for morph in sentence.chunks[src2].morphs if morph.pos != "記号"])
-                                item = item.rstrip()
+                                item = item.rstrip()  # 末尾の空白を除去します。
+                                
+                                # 項が述語に含まれていない場合、項のリストに追加します。
                                 if item not in predicates:
                                     items.append(item)
                             
+                            # 助詞と項がそれぞれ2つ以上ある場合のみ処理を行います。
                             if len(particles) > 1 and len(items) > 1:
-                                particles = sorted(set(particles))
-                                items = sorted(set(items))
-                                particles_form = " ".join(particles)
-                                items_form = " ".join(items)
-                                predicate = " ".join(predicates)
+                                particles = sorted(set(particles))  # 重複を除去し、助詞をソートします。
+                                items = sorted(set(items))  # 重複を除去し、項をソートします。
+                                particles_form = " ".join(particles)  # 助詞をスペース区切りの文字列に変換します。
+                                items_form = " ".join(items)  # 項をスペース区切りの文字列に変換します。
+                                predicate = " ".join(predicates)  # 述語をスペース区切りの文字列に変換します。
+                                
+                                # 述語、助詞、項をタブ区切りでファイルに出力します。
                                 print(f"{predicate}\t{particles_form}\t{items_form}", file=f)
 
                         
