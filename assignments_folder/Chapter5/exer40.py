@@ -37,7 +37,7 @@ with open("./assignments_folder/Chapter5/ai.ja.txt.parsed", encoding="utf-8") as
  
 # 出力
 for i in sentence_list[0]:  # 最初に取得したsentence_listsのみを出力
-    print(vars(i))  # varsメソッドを活用することで，クラスのフィールドを辞書型で表示する
+    print(vars(i))  # varsメソッドを活用することで，クラスのフィールドを辞書型で表示する　https://qiita.com/ganyariya/items/e01e0355c78e27c59d41
 
 """
 {'surface': '人工', 'base': '人工', 'pos': '名詞', 'pos1': '一般'}
