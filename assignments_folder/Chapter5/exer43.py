@@ -78,11 +78,11 @@ for chunk in sentences[2].chunks:
         continue
     
     # チャンク内の形態素の表層形を結合（記号を除く）
-    surf = "".join(morph.surface for morph in chunk.morphs if morph.pos != "記号")
+    surf = "".join([morph.surface for morph in chunk.morphs if morph.pos != "記号"])
     
     # 係り先チャンク
     dst_chunk = sentences[2].chunks[int(chunk.dst)]
-    next_surf = "".join(morph.surface for morph in dst_chunk.morphs if morph.pos != "記号")
+    next_surf = "".join([morph.surface for morph in dst_chunk.morphs if morph.pos != "記号"])
     
     # 名詞と動詞のチェック
     has_noun = any(morph.pos == "名詞" for morph in chunk.morphs)
