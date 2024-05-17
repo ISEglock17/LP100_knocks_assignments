@@ -85,10 +85,7 @@ with open("./assignments_folder/Chapter5/result47.txt", "w", encoding="utf-8") a
                 if morph.pos == "動詞": 
                     for src in chunk.srcs:
                         predicates = []
-                        if (len(sentence.chunks[src].morphs) == 2 and 
-                            sentence.chunks[src].morphs[0].pos1 == "サ変接続" and 
-                            sentence.chunks[src].morphs[1].surface == "を"):
-                            
+                        if (len(sentence.chunks[src].morphs) == 2 and sentence.chunks[src].morphs[0].pos1 == "サ変接続" and sentence.chunks[src].morphs[1].surface == "を"):
                             predicates = "".join([
                                 sentence.chunks[src].morphs[0].surface, 
                                 sentence.chunks[src].morphs[1].surface, 

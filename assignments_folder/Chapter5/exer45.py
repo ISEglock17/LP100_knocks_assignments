@@ -88,7 +88,7 @@ with open("./assignments_folder/Chapter5/result45.txt", "w", encoding="utf-8") a
                 if morph.pos == "動詞": 
                     particles = []  # 助詞
                     for src in chunk.srcs:
-                        particles.append([morph.surface for morph in sentences[i].chunks[src].morphs if morph.pos == "助詞"])
+                        particles += [morph.surface for morph in sentences[i].chunks[src].morphs if morph.pos == "助詞"]
                     if len(particles) > 1:
                         particles = set(particles)  # 重複を除去
                         particles = sorted(list(particles)) # 辞書順にソート
