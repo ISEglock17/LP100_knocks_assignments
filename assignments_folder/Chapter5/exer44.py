@@ -76,11 +76,11 @@ from graphviz import Digraph
 num = 0
 
 for sentence in sentences:
-    dg = Digraph(format='png')
+    dg = Digraph(format="png")
     for chunk in sentence.chunks:
         if chunk.dst != -1: 
-            surf = ''.join(morph.surface for morph in chunk.morphs if morph.pos != "記号")
-            next_surf = ''.join(morph.surface for morph in sentence.chunks[chunk.dst].morphs if morph.pos != "記号")
+            surf = "".join(morph.surface for morph in chunk.morphs if morph.pos != "記号")
+            next_surf = "".join(morph.surface for morph in sentence.chunks[chunk.dst].morphs if morph.pos != "記号")
             dg.edge(surf, next_surf)
     dg.render("assignments_folder/Chapter5/44/" + str(num) + ".png")  # ファイルを保存
     num += 1

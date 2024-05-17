@@ -90,10 +90,10 @@ with open("./assignments_folder/Chapter5/result45.txt", "w", encoding="utf-8") a
                     for src in chunk.srcs:
                         particles += [morph.surface for morph in sentences[i].chunks[src].morphs if morph.pos == "助詞"]
                     if len(particles) > 1:
-                        particles = set(particles)
-                        particles = sorted(list(particles))
-                        form = " ".join(particles)
-                        print(f"{morph.base}\t{form}", file=f)
+                        particles = set(particles)  # 重複を除去
+                        particles = sorted(list(particles)) # 辞書順にソート
+                        form = " ".join(particles)  # スペース区切りで文字列に変換
+                        print(f"{morph.base}\t{form}", file=f)  # ファイルに出力
                         
 # 出力結果
 """
@@ -129,6 +129,11 @@ cat ./result45.txt | sort | uniq -c | sort -nr | head -n 5
 cat ./result45.txt |grep "行う" | sort |uniq -c | sort -nr |head -n 5
 cat ./result45.txt |grep "なる" | sort |uniq -c | sort -nr |head -n 5
 cat ./result45.txt |grep "与える" | sort |uniq -c | sort -nr |head -n 5
+"""
+
+# UNIX 出力結果
+"""
+
 """
 
 
