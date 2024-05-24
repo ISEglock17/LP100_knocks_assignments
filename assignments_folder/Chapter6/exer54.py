@@ -59,15 +59,16 @@ logistic_model = LogisticRegression(max_iter=1000)
 logistic_model.fit(X_train_tfidf, Y_train)
 
 # 課題53
-# print(f"カテゴリ順: {logistic_model.classes_}\n")
+"""
+print(f"カテゴリ順: {logistic_model.classes_}\n")
  
 Y_pred = logistic_model.predict(X_valid_tfidf)
-# print(f"各記事のカテゴリ(ラベル): {Y_valid.values}")
-# print(f"各記事のカテゴリ予測: {Y_pred}\n")
+print(f"各記事のカテゴリ(ラベル): {Y_valid.values}")
+print(f"各記事のカテゴリ予測: {Y_pred}\n")
  
 Y_pred = logistic_model.predict_proba(X_valid_tfidf)
-# print(f"カテゴリの予測確率: \n{Y_pred}")
-
+print(f"カテゴリの予測確率: \n{Y_pred}")
+"""
 
 # 課題54
 from sklearn.metrics import accuracy_score
