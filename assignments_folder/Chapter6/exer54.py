@@ -76,13 +76,13 @@ from sklearn.metrics import accuracy_score
 Y_pred_train = logistic_model.predict(X_train_tfidf)
 Y_pred_test = logistic_model.predict(X_test_tfidf)
  
-print(f"train精度：{accuracy_score(Y_train, Y_pred_train)}")
-print(f"test精度：{accuracy_score(Y_test, Y_pred_test)}")
+print(f"train正解率：{accuracy_score(Y_train, Y_pred_train)}")
+print(f"test正解率：{accuracy_score(Y_test, Y_pred_test)}")
 
 # 出力結果
 """
-train精度：0.9510823727860557
-test精度：0.9093632958801499
+train正解率：0.9510823727860557
+test正解率：0.9093632958801499
 """
 
 
