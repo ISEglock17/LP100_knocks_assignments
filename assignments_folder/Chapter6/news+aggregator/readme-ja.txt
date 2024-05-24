@@ -56,6 +56,3 @@ STORY 同じストーリーに関するニュースを含むクラスタの英�
 HOSTNAME URL ホスト名
 CATEGORY ニュースのカテゴリー (b = ビジネス、t = 科学技術、e = エンターテインメント、m = 健康)
 URL 閲覧セッションを表すスペース区切りの2つのURL
-
-
-www.DeepL.com/Translator（無料版）で翻訳しました。

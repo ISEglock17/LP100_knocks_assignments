@@ -1,47 +1,203 @@
 """
-言語処理100本ノック 第3章課題
+言語処理100本ノック 第6章課題
 
-40. 係り受け解析結果の読み込み（形態素）
-形態素を表すクラスMorphを実装せよ．このクラスは表層形（surface），基本形（base），品詞（pos），品詞細分類1（pos1）をメンバ変数に持つこととする．さらに，係り受け解析の結果（ai.ja.txt.parsed）を読み込み，各文をMorphオブジェクトのリストとして表現し，冒頭の説明文の形態素列を表示せよ．
+50. データの入手・整形
+News Aggregator Data Setをダウンロードし、以下の要領で学習データ（train.txt），検証データ（valid.txt），評価データ（test.txt）を作成せよ．
 
-MeCabの基本として，次のフォーマットにしたがって，記録される。
-表層形\t品詞,品詞細分類1,品詞細分類2,品詞細分類3,活用型,活用形,原形,読み,発音
-        [0],　　[1]　  ,　　[2]　  ,　　[3]　 ,[4]　 ,[5]　,[6] ,[7] ,[8]
+ダウンロードしたzipファイルを解凍し，readme.txtの説明を読む．
+情報源（publisher）が”Reuters”, “Huffington Post”, “Businessweek”, “Contactmusic.com”, “Daily Mail”の事例（記事）のみを抽出する．
+抽出された事例をランダムに並び替える．
+抽出された事例の80%を学習データ，残りの10%ずつを検証データと評価データに分割し，それぞれtrain.txt，valid.txt，test.txtというファイル名で保存する．ファイルには，１行に１事例を書き出すこととし，カテゴリ名と記事見出しのタブ区切り形式とせよ（このファイルは後に問題70で再利用する）．
+学習データと評価データを作成したら，各カテゴリの事例数を確認せよ．
+
+
+
+
+input_file = "./assignments_folder/Chapter6/news+aggregator/newsCorpora.csv"    より，
+情報源（publisher）が”Reuters”, “Huffington Post”, “Businessweek”, “Contactmusic.com”, “Daily Mail”の事例（記事）のみを抽出する．
+
+抽出したファイルは，
+output_file = "./assignments_folder/Chapter6/specified_publishers_articles.csv"
+に出力する。
+
+input_file = "./assignments_folder/Chapter6/specified_publishers_articles.csv"より，    
+抽出された事例をランダムに並び替える．
+抽出された事例の80%を学習データ，残りの10%ずつを検証データと評価データに分割し，それぞれtrain.txt，valid.txt，test.txtというファイル名で保存する．
+ファイルには，１行に１事例を書き出すこととし，カテゴリ名と記事見出しのタブ区切り形式とせよ（このファイルは後に問題70で再利用する）．
+
+
+FORMAT: ID ︙TITLE ︙URL ︙PUBLISHER ︙CATEGORY ︙STORY ︙HOSTNAME ︙TIMESTAMP
+
+＊詳細内容＊
+ID 数値ID
+TITLE ニュースのタイトル 
+URL URL
+PUBLISHER 出版社名
+CATEGORY ニュースのカテゴリー（b = ビジネス、t = 科学技術、e = エンターテインメント、m = 健康）
+STORY 同じストーリーに関するニュースを含むクラスターの英数字ID
+HOSTNAME URLホスト名
+TIMESTAMP 1970年1月1日00:00:00 GMTからのミリ秒数で表した、ニュースが発表されたおおよその時間。
 """
 
-class Morph:
-    """
-        形態素を示すクラス
-    """
-    def __init__(self, line):
-        self.surface, other = line.split("\t")
-        other = other.split(",")
-        
-        self.base = other[6]
-        self.pos = other[0]
-        self.pos1 = other[1]
- 
-# 初期化
-sentence_list = []
-morph_list = []
+import csv
+import random
 
-with open("./assignments_folder/Chapter5/ai.ja.txt.parsed", encoding="utf-8") as f:
-    for line in f:
-        if line[0] == "*":  # *の場合スキップする
-            continue
-        elif line != "EOS\n":   # 文末でない場合Morphのインスタンスを生成
-            morph_list.append(Morph(line))
-        else:  # 文末の場合
-            sentence_list.append(morph_list)
-            morph_list = []
- 
-# 出力
-for i in sentence_list[0]:  # 最初に取得したsentence_listsのみを出力
-    print(vars(i))  # varsメソッドを活用することで，クラスのフィールドを辞書型で表示する　https://qiita.com/ganyariya/items/e01e0355c78e27c59d41
+# 指定された情報源
+specified_publishers = ["Reuters", "Huffington Post", "Businessweek", "Contactmusic.com", "Daily Mail"]
+
+# 元のファイルと新しいファイルのパス
+input_file = "./assignments_folder/Chapter6/news+aggregator/newsCorpora.csv"
+specified_publishers_output_file = "./assignments_folder/Chapter6/specified_publishers_articles.csv"
+train_file = "./assignments_folder/Chapter6/train.txt"
+valid_file = "./assignments_folder/Chapter6/valid.txt"
+test_file = "./assignments_folder/Chapter6/test.txt"
+
+# 指定された情報源の記事を抽出して新しいファイルに書き込む
+with open(input_file, 'r', encoding='utf-8') as csv_file, open(specified_publishers_output_file, 'w', newline='', encoding='utf-8') as output_csv:
+    reader = csv.reader(csv_file, delimiter='\t')
+    writer = csv.writer(output_csv, delimiter='\t')
+
+    for row in reader:
+        publisher = row[3]  # 出版社名の列
+        if publisher in specified_publishers:
+            writer.writerow(row)
+
+print("指定された情報源の記事を抽出し、新しいファイルに書き込みました。")
+
+
+
+# ファイルを読み込み、ランダムに並び替える
+with open(specified_publishers_output_file, 'r', encoding='utf-8') as file:
+    instances = file.readlines()
+
+random.shuffle(instances)
+
+# データの数を取得
+total_instances = len(instances)
+train_size = int(0.8 * total_instances)
+valid_size = int(0.1 * total_instances)
+
+# データを学習データ、検証データ、評価データに分割
+train_data = instances[:train_size]
+valid_data = instances[train_size:train_size+valid_size]
+test_data = instances[train_size+valid_size:]
+
+
+
+# カテゴリ名の変換辞書
+category_dict = {
+    "b": "ビジネス",
+    "t": "科学技術",
+    "e": "エンターテインメント",
+    "m": "健康"
+}
+
+def convert_category(category):
+    """
+        カテゴリ名を変換する関数
+    """
+    return category_dict.get(category, "Unknown")
+
+def write_data(filename, data):
+    """
+        ファイルにデータを書き込む
+    """
+    with open(filename, 'w', encoding='utf-8') as file:
+        for instance in data:
+            article_data_list = instance.strip().split('\t')  # CATEGORYとTITLEのみを取得
+            title = article_data_list[1]
+            category = convert_category(article_data_list[4])  # カテゴリ名を変換
+            file.write(f"{category}\t{title}\n")  # タブ区切り形式で書き込み
+
+# 学習データ、検証データ、評価データの書き込み
+write_data(train_file, train_data)
+write_data(valid_file, valid_data)
+write_data(test_file, test_data)
+
+print("データを学習データ、検証データ、評価データに分割し、ファイルに保存しました。")
+
+
+
+def count_category_instances(data: str) -> dict:
+    """
+        各カテゴリにおける事例数をカウントする関数
+        data: 事例
+        -> category_counts: 各カテゴリに対するカウントを格納した辞書型
+    """
+    category_counts = {"ビジネス": 0, "科学技術": 0, "エンターテインメント": 0, "健康": 0}
+    for instance in data:
+        category = convert_category(instance.strip().split('\t')[4])  # カテゴリ名を取得し、変換する
+        category_counts[category] += 1
+    return category_counts
+
+def print_category_counts(data_name: str, category_counts: int):
+    """
+        カテゴリごとの事例数を表示する関数
+        data_name: カテゴリ名
+        category_counts: カテゴリのカウント
+    """
+    print(f"{data_name}のカテゴリごとの事例数:")
+    for category, count in category_counts.items():
+        print(f"{category}: {count}件")
+    print()
+
+# カテゴリごとの事例数をカウント
+train_category_counts = count_category_instances(train_data)
+valid_category_counts = count_category_instances(valid_data)
+test_category_counts = count_category_instances(test_data)
+
+# 各データセットのカテゴリごとの事例数を表示
+print_category_counts("学習データ", train_category_counts)
+print_category_counts("検証データ", valid_category_counts)
+print_category_counts("評価データ", test_category_counts)
+
+
+# 出力結果
+"""
+# train.txt
+エンターテインメント	Save the Met #weareopera
+健康	Study Suggests Health Insurance Saves Lives. The Hill Wonders If That's A  ...
+ビジネス	Teva Gets US High Court Hearing on Generic Copaxone Delay (4)
+ビジネス	PRECIOUS-Gold struggles below $1300, hovers near six-week low
+エンターテインメント	The Fault in the Film
+...
+
+# valid.txt
+エンターテインメント	Scarlett Johansson Talks Balancing Motherhood And A Career
+エンターテインメント	Easter Week for Stoics: Why I Love Jesus But I'm Kind of 'Meh' About Easter
+エンターテインメント	Aus fans welcome Harry Potter update
+エンターテインメント	Rose Byrne keeps comedy streak going
+エンターテインメント	Nick Carter Gets Married, Retroactively Destroys Every '90s Girl's Dreams
+...
+
+# test.txt
+エンターテインメント	First official look at new Superman
+エンターテインメント	Avril Lavigne shows off her slim figure in plunging leather bodice in new  ...
+エンターテインメント	"Time For The ""Happily Ever After"": After ""Bachelorette"" Finale, Andi And Josh  ..."
+ビジネス	Spanish stocks - Factors to watch on Monday
+エンターテインメント	Lana Wachowski - Jupiter Ascending pushed back to 2015
+...
 
 """
-{'surface': '人工', 'base': '人工', 'pos': '名詞', 'pos1': '一般'}
-{'surface': '知能', 'base': '知能', 'pos': '名詞', 'pos1': '一般'}
+
+"""
+学習データのカテゴリごとの事例数:
+ビジネス: 4467件
+科学技術: 1226件
+エンターテインメント: 4244件
+健康: 743件
+
+検証データのカテゴリごとの事例数:
+ビジネス: 565件
+科学技術: 162件
+エンターテインメント: 523件
+健康: 85件
+
+評価データのカテゴリごとの事例数:
+ビジネス: 595件
+科学技術: 136件
+エンターテインメント: 522件
+健康: 82件
 """
 
 """
