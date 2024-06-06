@@ -1,0 +1,14 @@
+: capital-common-countries
+: capital-world
+: currency
+: city-in-state
+: family
+: gram1-adjective-to-adverb
+: gram2-opposite
+: gram3-comparative
+: gram4-superlative
+: gram5-present-participle
+: gram6-nationality-adjective
+: gram7-past-tense
+: gram8-plural
+: gram9-plural-verbs
