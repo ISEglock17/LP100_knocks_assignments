@@ -48,7 +48,10 @@ dataloaders_dict = {"train": train_dataloader, "val": valid_dataloader, "test": 
 # モデル、損失関数、最適化手法の定義
 model = SLNet(300, 4)
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)  
+# 確率的勾配降下法を用いる。model.parametersでモデルの学習可能なすべてのパラメータ(重みとバイアス)をoptimizerに渡す。
+# lr=0.01で学習率を設定する。momentum=0.9で前回の更新の影響をどれだけ残すかの調整を行う。
+# 参考にしたサイト　https://qiita.com/mathlive/items/2c67efa2d451ea1da1b1
 
 # 学習用関数の定義
 def train_model(model, dataloaders_dict, criterion, optimizer, num_epochs):
