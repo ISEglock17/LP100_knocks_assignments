@@ -55,7 +55,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
 # 学習用関数の定義
 def train_model(model, dataloaders_dict, criterion, optimizer, num_epochs):
-    for epoch in range(num_epochs):
+    for epoch in range(num_epochs): # エポック数を持ってくる
         print(f"Epoch {epoch + 1}/{num_epochs}")
         print("--------------------------------------------")
 
@@ -91,6 +91,22 @@ def train_model(model, dataloaders_dict, criterion, optimizer, num_epochs):
 # 学習の実行
 num_epochs = 10
 train_model(model, dataloaders_dict, criterion, optimizer, num_epochs)
+""" 
+...
+出力結果
+Epoch 9/10
+--------------------------------------------
+100%|██████████████████| 167/167 [00:00<00:00, 531.84it/s] 
+train Loss: 0.4989, Acc: 0.8290
+100%|████████████████████| 21/21 [00:00<00:00, 656.31it/s] 
+val Loss: 0.4914, Acc: 0.8276
+Epoch 10/10
+--------------------------------------------
+100%|██████████████████| 167/167 [00:00<00:00, 566.10it/s] 
+train Loss: 0.4847, Acc: 0.8359
+100%|████████████████████| 21/21 [00:00<00:00, 875.17it/s] 
+val Loss: 0.4785, Acc: 0.8298
+"""
 
 
 """
