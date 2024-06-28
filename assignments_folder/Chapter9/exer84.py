@@ -27,7 +27,7 @@ from gensim.models import KeyedVectors
 #   データ準備
 # -----------------------------------------
 # 単語ベクトルの導入
-file = './input/section7/GoogleNews-vectors-negative300.bin.gz'
+file = "./assignments_folder/Chapter7/GoogleNews-vectors-negative300.bin.gz"
 model = KeyedVectors.load_word2vec_format(file, binary=True)
 
 # newsCorporaから記事をDataFrame形式で読み取る
@@ -78,7 +78,7 @@ for text in train["TITLE"]:
 c = Counter(words)
 
 word_id = {}
-for i, count in enumerate(c.most_common()): # countの例: ('Eurosail-UK', 1)
+for i, count in enumerate(c.most_common()): # countの例: ("Eurosail-UK", 1)
     if count[1] >= 2:
         word_id[count[0]] = i + 1   # word_idに単語の出現頻度を記録
 
@@ -177,9 +177,9 @@ y_valid = torch.from_numpy(valid["CATEGORY"].map(category_dict).values)
 y_test = torch.from_numpy(test["CATEGORY"].map(category_dict).values)
 
 
-train_dataset = NewsDataset(train, y_train, phase='train')
-valid_dataset = NewsDataset(valid, y_valid, phase='val')
-test_dataset = NewsDataset(test, y_test, phase='val')
+train_dataset = NewsDataset(train, y_train, phase="train")
+valid_dataset = NewsDataset(valid, y_valid, phase="val")
+test_dataset = NewsDataset(test, y_test, phase="val")
 
 
 # データローダー用のカスタムcollate_fn
@@ -216,8 +216,8 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
     
     # epochごとのループ
     for epoch in range(num_epochs):
-        print('＊現在のエポック {} / {}'.format(epoch + 1, num_epochs))
-        print('* -------------------------------------------- *')
+        print("＊現在のエポック {} / {}".format(epoch + 1, num_epochs))
+        print("* -------------------------------------------- *")
         
         # GPUの使用確認
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -227,8 +227,8 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
         net.to(device)
         
         # フェイズ判定
-        for phase in ['train', 'val']:
-            if phase == 'train':
+        for phase in ["train", "val"]:
+            if phase == "train":
                 net.train() # 訓練モード
             else:
                 net.eval() # 検証モード
@@ -242,13 +242,13 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
                 labels = labels.to(device)
                 
                 # 順伝播計算
-                with torch.set_grad_enabled(phase == 'train'):  # フェイズがtrainのとき，勾配計算をONにする
+                with torch.set_grad_enabled(phase == "train"):  # フェイズがtrainのとき，勾配計算をONにする
                     outputs = net(inputs)
                     loss = criterion(outputs, labels) # 損失の計算
                     _, predicts = torch.max(outputs, 1) # ラベルを予想
                     
                     # 訓練時は逆伝播にする
-                    if phase == 'train':
+                    if phase == "train":
                         loss.backward()
                         optimizer.step()
                     
@@ -258,14 +258,14 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
             epoch_loss = epoch_loss / len(dataloaders_dict[phase].dataset)
             epoch_acc = epoch_corrects.double() / len(dataloaders_dict[phase].dataset)
             
-            if phase == 'train':
+            if phase == "train":
                 train_loss.append(epoch_loss)
                 train_acc.append(epoch_acc)
             else:
                 valid_loss.append(epoch_loss)
                 valid_acc.append(epoch_acc)
             
-            print('{} 損失(loss): {:.4f}, 精度(accuracy): {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            print("{} 損失(loss): {:.4f}, 精度(accuracy): {:.4f}".format(phase, epoch_loss, epoch_acc))
     return train_loss, train_acc, valid_loss, valid_acc
 
 
@@ -294,42 +294,11 @@ train_loss, train_acc, valid_loss, valid_acc = train_model(net, dataloaders_dict
 が，パッケージ更新時に環境が壊れたのか動かなくなったらしい。
 以前できていたコードでも動かなくなっていた。
 
-
-PS C:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題> python -u "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py"
-Traceback (most recent call last):
-  File "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py", line 24, in <module>
-    from gensim.models import KeyedVectors
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\__init__.py", line 11, in <module>
-    from gensim import parsing, corpora, matutils, interfaces, models, similarities, utils  # noqa:F401
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\__init__.py", line 6, in <module>   
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\indexedcorpus.py", line 14, in <module>
-    from gensim import interfaces, utils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\interfaces.py", line 19, in <module>        
-    from gensim import utils, matutils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\matutils.py", line 20, in <module>
-    from scipy.linalg import get_blas_funcs, triu
-ImportError: cannot import name 'triu' from 'scipy.linalg' (C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\scipy\linalg\__init__.py)
-
-PS C:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題> python -u "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py"
-Traceback (most recent call last):
-  File "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py", line 24, in <module>
-    from gensim.models import KeyedVectors
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\__init__.py", line 11, in <module>
-    from gensim import parsing, corpora, matutils, interfaces, models, similarities, utils  # noqa:F401
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\__init__.py", line 6, in <module>   
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\indexedcorpus.py", line 14, in <module>
-    from gensim import interfaces, utils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\interfaces.py", line 19, in <module>        
-    from gensim import utils, matutils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\matutils.py", line 20, in <module>
-    from scipy.linalg import get_blas_funcs, triu
-ImportError: cannot import name 'triu' from 'scipy.linalg' (C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\scipy\linalg\__init__.py)
-
+"""
 
 
 """
 
-"""
 リーダブルコードの実践
 
 """
