@@ -1,10 +1,11 @@
 """
 言語処理100本ノック 第8章課題
 
-82.  確率的勾配降下法による学習
+83. ミニバッチ化・GPU上での学習
 
-確率的勾配降下法（SGD: Stochastic Gradient Descent）を用いて，問題81で構築したモデルを学習せよ．
-訓練データ上の損失と正解率，評価データ上の損失と正解率を表示しながらモデルを学習し，適当な基準（例えば10エポックなど）で終了させよ．
+問題82のコードを改変し，B
+事例ごとに損失・勾配を計算して学習を行えるようにせよ（B
+の値は適当に選べ）．また，GPU上で学習を実行せよ．
 
 
 【参考にしたサイト】
@@ -195,6 +196,13 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
         print('＊現在のエポック {} / {}'.format(epoch + 1, num_epochs))
         print('* -------------------------------------------- *')
         
+        # GPUの使用確認
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        print(torch.cuda.get_device_name())
+        print("使用しているデバイスは", device)
+        
+        net.to(device)
+        
         # フェイズ判定
         for phase in ['train', 'val']:
             if phase == 'train':
@@ -207,6 +215,8 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
         
             for inputs, labels in tqdm(dataloaders_dict[phase]):
                 optimizer.zero_grad() # optimizerを初期化
+                inputs = inputs.to(device)
+                labels = labels.to(device)
                 
                 # 順伝播計算
                 with torch.set_grad_enabled(phase == 'train'):  # フェイズがtrainのとき，勾配計算をONにする
@@ -232,7 +242,7 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
                 valid_loss.append(epoch_loss)
                 valid_acc.append(epoch_acc)
             
-            print(f"{phase} 損失: {epoch_loss:.4f}, 正解率: {epoch_acc:.4f}")
+            print('{} 損失(loss): {:.4f}, 精度(accuracy): {:.4f}'.format(phase, epoch_loss, epoch_acc))
     return train_loss, train_acc, valid_loss, valid_acc
 
 
@@ -256,28 +266,20 @@ num_epochs = 10
 train_loss, train_acc, valid_loss, valid_acc = train_model(model, dataloaders_dict, criterion, optimizer, num_epochs=num_epochs)
 
 
-""" 
-出力確認
-
-＊現在のエポック 8 / 10
-* -------------------------------------------- *
-100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:02<00:00, 71.09it/s] 
-train 損失(loss): 3.8497, 精度(accuracy): 0.4213
-100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 228.26it/s] 
-val 損失(loss): 3.8490, 精度(accuracy): 0.4243
-＊現在のエポック 9 / 10
-* -------------------------------------------- *
-100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:02<00:00, 70.49it/s] 
-train 損失(loss): 3.8478, 精度(accuracy): 0.4238
-100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 210.00it/s] 
-val 損失(loss): 3.8479, 精度(accuracy): 0.4228
-＊現在のエポック 10 / 10
-* -------------------------------------------- *
-100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:02<00:00, 69.00it/s] 
-train 損失(loss): 3.8471, 精度(accuracy): 0.4233
-100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 132.08it/s] 
-val 損失(loss): 3.8472, 精度(accuracy): 0.4243
 """
+False
+Traceback (most recent call last):
+  File "c:\\Users\\ISE\\Desktop\\稲葉研究室\\100本ノック 課題\\assignments_folder\\Chapter9\\test.py", line 3, in <module>
+    print(torch.cuda.get_device_name())
+  File "C:\\Users\\ISE\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\torch\\cuda\\__init__.py", line 414, in get_device_name
+    return get_device_properties(device).name
+  File "C:\\Users\\ISE\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\torch\\cuda\\__init__.py", line 444, in get_device_properties
+    _lazy_init()  # will define _get_device_properties
+  File "C:\\Users\\ISE\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\torch\\cuda\\__init__.py", line 284, in _lazy_init   
+    raise AssertionError("Torch not compiled with CUDA enabled")
+AssertionError: Torch not compiled with CUDA enabled
+"""
+
 """
 リーダブルコードの実践
 

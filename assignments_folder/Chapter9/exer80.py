@@ -24,9 +24,7 @@ TIMESTAMP 1970年1月1日00:00:00 GMTからのミリ秒数で表した、ニュ�
 import pandas as pd
 import re
 import numpy as np
-import torch
 
-from gensim.models import KeyedVectors
 from sklearn.model_selection import train_test_split
 from collections import Counter
 
