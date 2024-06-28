@@ -104,6 +104,7 @@ for i in range(10):
 # -----------------------------------------
 #   RNN
 # -----------------------------------------
+"""
 class RNN(nn.Module):
     def __init__(self, vocab_size, emb_size, padding_idx, hidden_size, output_size, num_layers=3, emb_weights=None):
         super(RNN, self).__init__()
@@ -121,6 +122,25 @@ class RNN(nn.Module):
         x = x[:, -1, :] # 最後の出力に絞る
         logits = self.fc(x)
         logits = self.softmax(x)
+        return logits
+"""
+ 
+class RNN(nn.Module):
+    def __init__(self, vocab_size, emb_size, padding_idx, hidden_size, output_size, num_layers=3, emb_weights=None):
+        super(RNN, self).__init__()
+        if emb_weights != None:
+            self.emb = nn.Embedding.from_pretrained(emb_weights, padding_idx=padding_idx)
+        else:
+            self.emb = nn.Embedding(vocab_size, emb_size, padding_idx=padding_idx)
+        self.rnn = nn.RNN(emb_size, hidden_size, batch_first=True, bidirectional=True, num_layers=num_layers)
+        self.fc = nn.Linear(hidden_size * 2, output_size)  # bidirectionalなので隠れ層のサイズは2倍にする
+        self.softmax = nn.Softmax(dim=1)
+    
+    def forward(self, x, h0=None):
+        x = self.emb(x)
+        x, h = self.rnn(x, h0)
+        x = x[:, -1, :]  # 最後の出力を使用
+        logits = self.fc(x)
         return logits
 
 # -----------------------------------------
@@ -221,12 +241,14 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
         print("＊現在のエポック {} / {}".format(epoch + 1, num_epochs))
         print("* -------------------------------------------- *")
         
+        """
         # GPUの使用確認
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         print(torch.cuda.get_device_name())
         print("使用しているデバイスは", device)
         
         net.to(device)
+        """
         
         # フェイズ判定
         for phase in ["train", "val"]:
@@ -240,8 +262,10 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
         
             for inputs, labels in tqdm(dataloaders_dict[phase]):
                 optimizer.zero_grad() # optimizerを初期化
+                """
                 inputs = inputs.to(device)
                 labels = labels.to(device)
+                """
                 
                 # 順伝播計算
                 with torch.set_grad_enabled(phase == "train"):  # フェイズがtrainのとき，勾配計算をONにする
@@ -292,37 +316,42 @@ train_loss, train_acc, valid_loss, valid_acc = train_model(net, dataloaders_dict
 
 
 """
-PS C:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題> python -u "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py"
-Traceback (most recent call last):
-  File "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py", line 24, in <module>
-    from gensim.models import KeyedVectors
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\__init__.py", line 11, in <module>
-    from gensim import parsing, corpora, matutils, interfaces, models, similarities, utils  # noqa:F401
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\__init__.py", line 6, in <module>   
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\indexedcorpus.py", line 14, in <module>
-    from gensim import interfaces, utils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\interfaces.py", line 19, in <module>        
-    from gensim import utils, matutils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\matutils.py", line 20, in <module>
-    from scipy.linalg import get_blas_funcs, triu
-ImportError: cannot import name "triu" from "scipy.linalg" (C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\scipy\linalg\__init__.py)
-
-PS C:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題> python -u "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py"
-Traceback (most recent call last):
-  File "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer84.py", line 24, in <module>
-    from gensim.models import KeyedVectors
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\__init__.py", line 11, in <module>
-    from gensim import parsing, corpora, matutils, interfaces, models, similarities, utils  # noqa:F401
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\__init__.py", line 6, in <module>   
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\corpora\indexedcorpus.py", line 14, in <module>
-    from gensim import interfaces, utils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\interfaces.py", line 19, in <module>        
-    from gensim import utils, matutils
-  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\gensim\matutils.py", line 20, in <module>
-    from scipy.linalg import get_blas_funcs, triu
-ImportError: cannot import name "triu" from "scipy.linalg" (C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\scipy\linalg\__init__.py)
-
-
+＊現在のエポック 5 / 10
+* -------------------------------------------- *
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:04<00:00, 38.43it/s] 
+train 損失(loss): 1.1397, 精度(accuracy): 0.4943
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 112.30it/s] 
+val 損失(loss): 1.1410, 精度(accuracy): 0.4880
+＊現在のエポック 6 / 10
+* -------------------------------------------- *
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:04<00:00, 38.81it/s] 
+train 損失(loss): 1.1369, 精度(accuracy): 0.4937
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 114.13it/s] 
+val 損失(loss): 1.1402, 精度(accuracy): 0.4850
+＊現在のエポック 7 / 10
+* -------------------------------------------- *
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:04<00:00, 38.76it/s] 
+train 損失(loss): 1.1364, 精度(accuracy): 0.4958
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 114.75it/s] 
+val 損失(loss): 1.1379, 精度(accuracy): 0.4828
+＊現在のエポック 8 / 10
+* -------------------------------------------- *
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:04<00:00, 36.19it/s] 
+train 損失(loss): 1.1376, 精度(accuracy): 0.4894
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 97.67it/s] 
+val 損失(loss): 1.1366, 精度(accuracy): 0.4865
+＊現在のエポック 9 / 10
+* -------------------------------------------- *
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:04<00:00, 38.36it/s] 
+train 損失(loss): 1.1344, 精度(accuracy): 0.4939
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 100.00it/s] 
+val 損失(loss): 1.1382, 精度(accuracy): 0.4858
+＊現在のエポック 10 / 10
+* -------------------------------------------- *
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 167/167 [00:04<00:00, 34.12it/s] 
+train 損失(loss): 1.1307, 精度(accuracy): 0.4988
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:00<00:00, 96.77it/s] 
+val 損失(loss): 1.1356, 精度(accuracy): 0.4888
 
 """
 
