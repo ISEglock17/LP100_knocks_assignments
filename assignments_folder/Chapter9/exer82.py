@@ -255,6 +255,10 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 num_epochs = 10
 train_loss, train_acc, valid_loss, valid_acc = train_model(model, dataloaders_dict, criterion, optimizer, num_epochs=num_epochs)
 
+print("train損失", train_loss)
+print("train精度", train_acc)
+print("valid損失", valid_loss)
+print("valid精度", valid_acc)
 
 """ 
 出力確認
