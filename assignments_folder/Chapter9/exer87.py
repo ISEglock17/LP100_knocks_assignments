@@ -191,8 +191,8 @@ test_dataset = NewsDataset(test, y_test, phase="val")
 def my_collate_fn(batch):
     inputs, labels = zip(*batch)
     lengths = [len(x) for x in inputs]
-    maxes_length = maxes(lengths)
-    padded_inputs = torch.zeros(len(inputs), maxes_length, dtype=torch.long)
+    max_length = max(lengths)
+    padded_inputs = torch.zeros(len(inputs), max_length, dtype=torch.long)
     for i, x_len in enumerate(lengths):
         padded_inputs[i, :x_len] = inputs[i]
     labels = torch.tensor(labels)
@@ -320,31 +320,31 @@ def calc_acc(net, dataloader):
 # グラフの表示
 fig, axes = plt.subplots(1,2, figsize=(12, 6))
 epochs = np.arange(num_epochs)
-axes[0].plot(epochs, train_loss, label='train')
-axes[0].plot(epochs, valid_loss, label='valid')
-axes[0].set_title('loss')
-axes[0].set_xlabel('epoch')
-axes[0].set_ylabel('loss')
+axes[0].plot(epochs, train_loss, label="train")
+axes[0].plot(epochs, valid_loss, label="valid")
+axes[0].set_title("loss")
+axes[0].set_xlabel("epoch")
+axes[0].set_ylabel("loss")
 
-axes[1].plot(epochs, train_acc, label='train')
-axes[1].plot(epochs, valid_acc, label='valid')
-axes[1].set_title('acc')
-axes[1].set_xlabel('epoch')
-axes[1].set_ylabel('acc')
+axes[1].plot(epochs, train_acc, label="train")
+axes[1].plot(epochs, valid_acc, label="valid")
+axes[1].set_title("acc")
+axes[1].set_xlabel("epoch")
+axes[1].set_ylabel("acc")
 
-axes[0].legend(loc='best')
-axes[1].legend(loc='best')
+axes[0].legend(loc="best")
+axes[1].legend(loc="best")
 
 plt.tight_layout()
-plt.savefig('fig87.png')
+plt.savefig("./assignments_folder/Chapter9/fig87.png")
 plt.show()
 
 acc_train = calc_acc(net, train_dataloader)
 acc_valid = calc_acc(net, valid_dataloader)
 acc_test = calc_acc(net, test_dataloader)
-print('学習データのaccuracy: {:.4f}'.format(acc_train))
-print('検証データのaccuracy: {:.4f}'.format(acc_valid))
-print('テストデータのaccuracy: {:.4f}'.format(acc_test))
+print("学習データのaccuracy: {:.4f}".format(acc_train))
+print("検証データのaccuracy: {:.4f}".format(acc_valid))
+print("テストデータのaccuracy: {:.4f}".format(acc_test))
 
 """
 リーダブルコードの実践
