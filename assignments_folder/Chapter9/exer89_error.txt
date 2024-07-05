@@ -1,0 +1,43 @@
+
+""" 
+Traceback (most recent call last):
+  File "c:\Users\ISE\Desktop\稲葉研究室\100本ノック 課題\assignments_folder\Chapter9\exer89.py", line 6, in <module>
+    from transformers import BertTokenizer, BertForSequenceClassification, Trainer, TrainingArguments, BertModel
+  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\transformers\__init__.py", line 26, in <module>    
+    from . import dependency_versions_check
+  File "C:\Users\ISE\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\LocalCache\local-packages\Python310\site-packages\transformers\dependency_versions_check.py", line 16, in <module>
+    from .utils.versions import require_version, require_version_core
+ModuleNotFoundError: No module named 'transformers.utils'
+"""
+
+"""
+WARNING: Ignoring invalid distribution -lotly (c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages)
+Collecting transformers
+  Using cached transformers-4.42.3-py3-none-any.whl.metadata (43 kB)
+Requirement already satisfied: filelock in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (3.15.4)
+Requirement already satisfied: huggingface-hub<1.0,>=0.23.2 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (0.23.4)
+Requirement already satisfied: numpy<2.0,>=1.17 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (1.23.5)
+Requirement already satisfied: packaging>=20.0 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (24.1)
+Requirement already satisfied: pyyaml>=5.1 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (6.0.1)
+Requirement already satisfied: regex!=2019.12.17 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (2024.5.15)
+Requirement already satisfied: requests in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (2.32.3)
+Requirement already satisfied: safetensors>=0.4.1 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from 
+transformers) (0.4.3)
+Requirement already satisfied: tokenizers<0.20,>=0.19 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (0.19.1)
+Requirement already satisfied: tqdm>=4.27 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from transformers) (4.66.4)
+Requirement already satisfied: fsspec>=2023.5.0 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from huggingface-hub<1.0,>=0.23.2->transformers) (2023.6.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from huggingface-hub<1.0,>=0.23.2->transformers) (4.12.2)
+Requirement already satisfied: colorama in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from tqdm>=4.27->transformers) (0.4.6)
+Requirement already satisfied: charset-normalizer<4,>=2 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages 
+(from requests->transformers) (3.2.0)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from requests->transformers) (3.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from 
+requests->transformers) (1.26.19)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages (from 
+requests->transformers) (2023.7.22)
+Using cached transformers-4.42.3-py3-none-any.whl (9.3 MB)
+WARNING: Ignoring invalid distribution -lotly (c:\users\ise\appdata\local\packages\pythonsoftwarefoundation.python.3.10_qbz5n2kfra8p0\localcache\local-packages\python310\site-packages)
+Installing collected packages: transformers
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\ISE\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\transformers\\models\\deprecated\\trajectory_transformer\\convert_trajectory_transformer_original_pytorch_checkpoint_to_pytorch.py'
+HINT: This error might have occurred since this system does not have Windows Long Path support enabled. You can find information on how to enable this at https://pip.pypa.io/warnings/enable-long-paths 
+"""
