@@ -45,6 +45,19 @@ y_test = torch.from_numpy(test['CATEGORY'].map(category_dict).values)
 #   BERT DataSet
 # ----------------------------------------- 
 class BERTDataSet(Dataset):
+    """ 
+    sentence: 入力テキスト
+    add_special_tokens=True: [CLS] と [SEP] トークンを追加
+    max_length=128: 最大長
+    padding='max_length': 長さが足りない場合にパディングを追加
+    truncation=True: 長さが超過する場合にカット
+    return_attention_mask=True: 注意マスクを返す
+    return_tensors='pt': PyTorchのテンソルとして返す
+    
+    input_ids: テキストのIDリスト
+    attention_mask: テキストの各トークンが実際のトークンかパディングかを示すマスク
+    labels: ラベルのテンソル
+    """
     def __init__(self, X, y, tokenizer, max_length=128):
         self.X = X
         self.y = y

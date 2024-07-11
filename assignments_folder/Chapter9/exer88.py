@@ -305,8 +305,9 @@ def objective(trial):
     kernel_height = trial.suggest_int('kernel_height', 2, 5)
     out_channels = trial.suggest_int('out_channels', 50, 200)
     dropout_rate = trial.suggest_float('dropout_rate', 0.1, 0.5)
-    learning_rate = trial.suggest_float('learning_rate', 1e-5, 1e-1, log=True)
+    learning_rate = trial.suggest_float('learning_rate', 1e-6, 1e-3, log=True)
     momentum = trial.suggest_float('momentum', 0.5, 0.9)  # momentum のハイパーパラメータを追加
+    # optimizer = trial.suggest_str() ここも変更できるようにしたい
 
     # `get_dataloader` を呼び出してデータローダーを取得
     dataloaders_dict = get_dataloader(batch_size=batch_size)
@@ -326,7 +327,7 @@ def objective(trial):
     )
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, momentum=momentum)
 
     train_loss, train_acc, valid_loss, valid_acc = train_model(
         model, dataloaders_dict, criterion, optimizer, num_epochs=10
@@ -337,7 +338,7 @@ def objective(trial):
 
 # Optunaのスタディの設定
 study = optuna.create_study(direction='minimize')
-study.optimize(objective, n_trials=10)
+study.optimize(objective, n_trials=50)
 
 # 最良のハイパーパラメータを取得
 best_params = study.best_params
